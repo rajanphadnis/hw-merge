@@ -1,21 +1,20 @@
 from pypdf import PdfMerger
 import os
-folderName = os.path.basename(os.path.expanduser('~'))
 
 merger = PdfMerger()
 pdfs = []
-failed = False
 
 iterator = [1,2,3,4,5,6,7,8,9,10]
+finishedAt = 0
 for i in iterator:
     try:
         merger.append(str(i) + ".pdf")
+        finishedAt = i
     except:
-        if i==1:
-            failed = True
         break
 
-if failed == False:
+if finishedAt > 0:
+    folderName = os.path.basename(os.path.dirname(os.path.realpath(str(finishedAt) + ".pdf")))
     merger.write(folderName + "_Responses.pdf")
 merger.close()
 
